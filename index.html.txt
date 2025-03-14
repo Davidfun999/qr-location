@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉ đường đến khách sạn gần nhất</title>
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                alert("Trình duyệt của bạn không hỗ trợ định vị!");
+            }
+        }
+
+        function showPosition(position) {
+            let userLat = position.coords.latitude;
+            let userLng = position.coords.longitude;
+
+            // Danh sách các khách sạn (thay bằng tọa độ thực tế của bạn)
+            let locations = [
+                { name: "Khách sạn A", lat: 10.762622, lng: 106.660172 },
+                { name: "Khách sạn B", lat: 10.776889, lng: 106.700806 },
+                { name: "Khách sạn C", lat: 10.771800, lng: 106.698800 },
+                { name: "Khách sạn D", lat: 10.755707, lng: 106.660470 }
+            ];
+
+            // Tìm điểm gần nhất
+            let nearest = locations.reduce((prev, curr) => {
+                let prevDist = getDistance(userLat, userLng, prev.lat, prev.lng);
+                let currDist = getDistance(userLat, userLng, curr.lat, curr.lng);
+                return (currDist < prevDist) ? curr : prev;
+            });
+
+            // Chuyển hướng đến Google Maps
+            window.location.href = `https://www.google.com/maps/dir/?api=1&destination=${nearest.lat},${nearest.lng}`;
+        }
+
+        function getDistance(lat1, lon1, lat2, lon2) {
+            let R = 6371; // Bán kính Trái Đất (km)
+            let dLat = (lat2 - lat1) * Math.PI / 180;
+            let dLon = (lon2 - lon1) * Math.PI / 180;
+            let a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c;
+        }
+
+        function showError(error) {
+            alert("Không thể lấy vị trí. Hãy kiểm tra GPS hoặc cho phép quyền truy cập vị trí.");
+        }
+
+        window.onload = getLocation;
+    </script>
+</head>
+<body>
+    <h1>Đang tìm khách sạn gần nhất...</h1>
+</body>
+</html>
