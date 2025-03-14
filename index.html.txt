@@ -19,11 +19,9 @@
 
             // Danh sách các khách sạn (thay bằng tọa độ thực tế của bạn)
             let locations = [
-                { name: "Khách sạn A", lat: 10.762622, lng: 106.660172 },
-                { name: "Khách sạn B", lat: 10.776889, lng: 106.700806 },
-                { name: "Khách sạn C", lat: 10.771800, lng: 106.698800 },
-                { name: "Khách sạn D", lat: 10.755707, lng: 106.660470 }
-            ];
+                { name: "Phục hồi ghế Gia", lat: 10.736332693097257, lng: 106.67681494347322 },
+                { name: "CLB BILLIARDS PHÁT THỊNH", lat: 110.73639413875279, lng: 1106.67752112930953 }
+               ];
 
             // Tìm điểm gần nhất
             let nearest = locations.reduce((prev, curr) => {
